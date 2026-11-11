@@ -1,0 +1,13 @@
+build/
+dist/
+
+nbproject/private/
+.settings/
+build.xml
+.nb-gradle/
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+
