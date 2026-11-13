@@ -41,9 +41,54 @@ public class Sigeas {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        Scanner escaner = new Scanner(System.in);
         
+        String opcionMenuInicioDeSesion, usuario, contrasena;
+        // INICIO DE SESION
         
+        // NOTE: Este usuario es de testeo, una vez implementada la logica de creacion de profesores hay que quitarlo
+        crearProfesor("pablo", "tacos_de_carnitas");
+        
+        int indiceUsuario;
+        do{
+            System.out.println("INICIO DE SESION");
+            System.out.println("Inicio de sesion");
+            System.out.println("a) Iniciar sesion como profesor");
+            System.out.println("b) Iniciar sesion como administrador");
+            System.out.println("c) Salir");       
+            opcionMenuInicioDeSesion = escaner.next().toLowerCase();
+            switch(opcionMenuInicioDeSesion){
+                case "a": {
+                    System.out.print("Usuario > ");
+                    usuario = escaner.next();
+                    System.out.print("Contraseña > ");
+                    contrasena = escaner.next();
+                    indiceUsuario = profesores.indexOf(usuario); // Encontrar el indice en donde esta el usuario
+                    if(indiceUsuario != -1 && contrasenas.get(indiceUsuario).equals(contrasena)){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
+                        System.out.print("\033[H\033[2J");  // Limpiar consola
+                        System.out.println("Acceso permitido"); 
+                        // TODO: Añadir logica del submenu del profesor
+                    }else{
+                        System.out.println("Usuario o contraseña no encontrados");
+                    }
+                    break;
+                }
+                case "b": {
+                    System.out.print("Contrasena > ");
+                    contrasena = escaner.next();
+                    if(contrasena.equals(CONTRASENA_ADMINISTRADOR)){
+                        System.out.print("\033[H\033[2J");  // Limpiar consola
+                        System.out.println("Acceso permitido");
+                        // TODO: Añadir la logica del submenu del administrador
+                    }else{
+                        System.out.println("Acceso denegado");
+                    }
+                }
+                case "c": break;
+                default:
+                    System.out.println("Opcion desconocida");
+            }
+        }while(!opcionMenuInicioDeSesion.equals("c"));
     }
     
 }
