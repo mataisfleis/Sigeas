@@ -72,7 +72,7 @@ public class Sigeas {
                     if(indiceUsuario != -1 && contrasenas.get(indiceUsuario).equals(contrasena)){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido"); 
-                        // TODO: Añadir logica del submenu del profesor
+                        menuProfesores(escaner); // Menu administrador
                     }else{
                         System.out.println("Usuario o contraseña no encontrados");
                     }
@@ -85,7 +85,7 @@ public class Sigeas {
                     if(contrasena.equals(CONTRASENA_ADMINISTRADOR)){
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido");
-                        menuAdministrador(escaner);
+                        menuAdministrador(escaner); // Menu profesores
                     }else{
                         System.out.println("Acceso denegado");
                     }
@@ -129,10 +129,52 @@ public class Sigeas {
                     // TODO: Eliminar profesor
                     break;
                 }
-                case "e": break;
+                case "e": {
+                    // TODO: Iniciar pase de asistencia
+                    break;
+                }
+                case "f": break;
+                default: {
+                    System.out.println("Opcion desconocida");
+                }
             }
         }while(!opcionMenuAdministrador.equals("e"));
         
     }
-    
+    static void menuProfesores(Scanner escaner){
+        String opcionMenuProfesores;
+        do {
+            System.out.println("MENU PROFESORES");
+            System.out.println("a) Consultar lista de alumnos");
+            System.out.println("b) Añadir alumno");
+            System.out.println("c) Modificar datos de un alumno");
+            System.out.println("d) Eliminar alumno");
+            System.out.println("e) Iniciar pase de asistencia");
+            System.out.println("f) Volver al menu de inicio de sesion");
+            opcionMenuProfesores = escaner.next().toLowerCase();
+            
+            switch(opcionMenuProfesores){
+                case "a": {
+                    // TODO: Consultar lista de alumnos
+                    break;
+                }
+                case "b": {
+                    // TODO: Añadir alumno
+                    break;
+                }
+                case "c": {
+                    // TODO: Modificar datos de un alumno
+                    break;
+                }
+                case "d": {
+                    //TODO: Eliminar alumno
+                    break;
+                }
+                case "e": break;
+                default: {
+                    System.out.println("Opcion desconocida");
+                }
+            }
+        }while(!opcionMenuProfesores.equals("f"));
+    }
 }
