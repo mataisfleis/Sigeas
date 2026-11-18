@@ -49,16 +49,21 @@ public class Sigeas {
         // NOTE: Este usuario es de testeo, una vez implementada la logica de creacion de profesores hay que quitarlo
         crearProfesor("pablo", "tacos_de_carnitas");
         
-        int indiceUsuario;
+        
+        
         do{
+            
             System.out.println("INICIO DE SESION");
             System.out.println("Inicio de sesion");
             System.out.println("a) Iniciar sesion como profesor");
             System.out.println("b) Iniciar sesion como administrador");
             System.out.println("c) Salir");       
             opcionMenuInicioDeSesion = escaner.next().toLowerCase();
+            
             switch(opcionMenuInicioDeSesion){
                 case "a": {
+                    
+                    int indiceUsuario;
                     System.out.print("Usuario > ");
                     usuario = escaner.next();
                     System.out.print("Contraseña > ");
@@ -73,6 +78,7 @@ public class Sigeas {
                     }
                     break;
                 }
+                
                 case "b": {
                     System.out.print("Contrasena > ");
                     contrasena = escaner.next();
@@ -83,7 +89,9 @@ public class Sigeas {
                     }else{
                         System.out.println("Acceso denegado");
                     }
+                    break;
                 }
+                
                 case "c": break;
                 default:
                     System.out.println("Opcion desconocida");
