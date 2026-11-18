@@ -85,7 +85,7 @@ public class Sigeas {
                     if(contrasena.equals(CONTRASENA_ADMINISTRADOR)){
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido");
-                        // TODO: Añadir la logica del submenu del administrador
+                        menuAdministrador(escaner);
                     }else{
                         System.out.println("Acceso denegado");
                     }
@@ -97,6 +97,42 @@ public class Sigeas {
                     System.out.println("Opcion desconocida");
             }
         }while(!opcionMenuInicioDeSesion.equals("c"));
+    }
+    
+    static void menuAdministrador(Scanner escaner){
+        String opcionMenuAdministrador;
+        do{
+            System.out.println("MENU ADMINISTRADOR");
+            System.out.println("a) Consultar lista de profesores");
+            System.out.println("b) Agregar profesores");
+            System.out.println("c) Modificar datos de un profesor");
+            System.out.println("d) Eliminar un profesor");
+            System.out.println("e) Salir al menu de inicio de sesion");
+            System.out.print("Elije una opcion > ");
+            
+            opcionMenuAdministrador = escaner.next().toLowerCase();
+            
+            switch(opcionMenuAdministrador){
+                case "a":{
+                    // TODO: Consultar lista de profesores
+                    break;
+                }
+                case "b":{
+                    //TODO: Agregar un profesor
+                    break;
+                }
+                case "c":{
+                    // TODO: Modificar profesor
+                    break;
+                }
+                case "d": {
+                    // TODO: Eliminar profesor
+                    break;
+                }
+                case "e": break;
+            }
+        }while(!opcionMenuAdministrador.equals("e"));
+        
     }
     
 }
