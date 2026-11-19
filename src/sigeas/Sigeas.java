@@ -58,16 +58,16 @@ public class Sigeas {
             System.out.println("a) Iniciar sesion como profesor");
             System.out.println("b) Iniciar sesion como administrador");
             System.out.println("c) Salir");       
-            opcionMenuInicioDeSesion = escaner.next().toLowerCase();
+            opcionMenuInicioDeSesion = escaner.nextLine().toLowerCase();
             
             switch(opcionMenuInicioDeSesion){
                 case "a": {
                     
                     int indiceUsuario;
                     System.out.print("Usuario > ");
-                    usuario = escaner.next();
+                    usuario = escaner.nextLine();
                     System.out.print("Contraseña > ");
-                    contrasena = escaner.next();
+                    contrasena = escaner.nextLine();
                     indiceUsuario = profesores.indexOf(usuario); // Encontrar el indice en donde esta el usuario
                     if(indiceUsuario != -1 && contrasenas.get(indiceUsuario).equals(contrasena)){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
                         System.out.print("\033[H\033[2J");  // Limpiar consola
@@ -92,7 +92,10 @@ public class Sigeas {
                     break;
                 }
                 
-                case "c": break;
+                case "c": {
+                    escaner.close();
+                    break;
+                }
                 default:
                     System.out.println("Opcion desconocida");
             }
@@ -110,7 +113,7 @@ public class Sigeas {
             System.out.println("e) Salir al menu de inicio de sesion");
             System.out.print("Elije una opcion > ");
             
-            opcionMenuAdministrador = escaner.next().toLowerCase();
+            opcionMenuAdministrador = escaner.nextLine().toLowerCase();
             
             switch(opcionMenuAdministrador){
                 case "a":{
@@ -151,15 +154,20 @@ public class Sigeas {
             System.out.println("d) Eliminar alumno");
             System.out.println("e) Iniciar pase de asistencia");
             System.out.println("f) Volver al menu de inicio de sesion");
-            opcionMenuProfesores = escaner.next().toLowerCase();
+            opcionMenuProfesores = escaner.nextLine().toLowerCase();
             
             switch(opcionMenuProfesores){
                 case "a": {
                     // TODO: Consultar lista de alumnos
+                    //Temporal: 
+                        System.out.println("ALUMNOS");
+                        for(int i = 0; i < boletas.size(); i++){
+                            System.out.println("Boleta: " + boletas.get(i) + "; Nombre: " + nombres.get(i) + " " + apellidosPaterno.get(i) + " " + apellidosMaterno.get(i) + "; Grupo: " + grupos.get(i));
+                        }
                     break;
                 }
                 case "b": {
-                    // TODO: Añadir alumno
+                    menuCrearAlumno(escaner);
                     break;
                 }
                 case "c": {
@@ -176,5 +184,54 @@ public class Sigeas {
                 }
             }
         }while(!opcionMenuProfesores.equals("f"));
+    }
+    // MENU CREAR ALUMNOS
+    static void menuCrearAlumno(Scanner escaner){
+        int boletaAlumno;
+        String nombreAlumno, apellidoPaternoAlumno, apellidoMaternoAlumno, grupoAlumno, opcionCrearAlumno;
+        do{
+            do { // Validamos que la boleta recibida sea un entero mayor a cero
+                System.out.println("¿Cual es la boleta del alumno?");
+                boletaAlumno = validarBoleta(escaner.nextLine()); // Llamamos a la funcion para validar boleta
+                if(boletaAlumno < 1){ // Si la boleta es invalida, lo notificamos
+                    System.out.println("ERROR: Boleta invalida");
+                }
+            }while(boletaAlumno < 1);
+            
+            System.out.println("¿Cual es el nombre del alumno? (Primer nombre)");
+            nombreAlumno = escaner.nextLine();
+            System.out.println("¿Cual es el apellido paterno del alumno?");
+            apellidoPaternoAlumno = escaner.nextLine();
+            System.out.println("¿Cual es el apellido materno del alumno?");
+            apellidoMaternoAlumno = escaner.nextLine();
+            System.out.println("¿Cual es el grupo del alumno?");
+            grupoAlumno = escaner.nextLine();
+            
+            System.out.println("Datos capturados, elija una accion: ");
+            System.out.println("a) Guardar datos y salir");
+            System.out.println("b) Guardar datos y agregar un nuevo alumno");
+            System.out.println("c) Salir sin guardar datos");
+            System.out.println("d) Reingresar datos del alumno");
+            
+            do{
+                System.out.print("Elija una accion: ");
+                opcionCrearAlumno = escaner.nextLine().toLowerCase();
+            }while(!("a".equals(opcionCrearAlumno) || "b".equals(opcionCrearAlumno) || "c".equals(opcionCrearAlumno) || "d".equals(opcionCrearAlumno)));
+               
+            if(opcionCrearAlumno.equals("a") || opcionCrearAlumno.equals("b")){ // Si se desea guardar los datos
+                crearAlumno(boletaAlumno, nombreAlumno, apellidoPaternoAlumno, apellidoMaternoAlumno, grupoAlumno); 
+            }
+        
+        }while(!(opcionCrearAlumno.equals("a") || opcionCrearAlumno.equals("c"))); // Si se desea salir
+    }
+    // Valida si la boleta es valida, retorna un int de la boleta si es valida, y -1 si es invalida
+    static int validarBoleta(String boleta){
+        int boletaAlumno;
+        try {
+           boletaAlumno = Integer.parseInt(boleta);
+        }catch(NumberFormatException e){
+            return -1;
+        }
+        return boletaAlumno;
     }
 }
