@@ -44,13 +44,11 @@ public class Sigeas {
         Scanner escaner = new Scanner(System.in);
         
         String opcionMenuInicioDeSesion, usuario, contrasena;
-        // INICIO DE SESION
         
         // NOTE: Este usuario es de testeo, una vez implementada la logica de creacion de profesores hay que quitarlo
         crearProfesor("pablo", "tacos_de_carnitas");
         
-        
-        
+        // INICIO DE SESION
         do{
             
             System.out.println("INICIO DE SESION");
@@ -62,14 +60,16 @@ public class Sigeas {
             
             switch(opcionMenuInicioDeSesion){
                 case "a": {
+                    boolean esUsuarioValido;
                     
-                    int indiceUsuario;
                     System.out.print("Usuario > ");
                     usuario = escaner.nextLine();
                     System.out.print("Contraseña > ");
                     contrasena = escaner.nextLine();
-                    indiceUsuario = profesores.indexOf(usuario); // Encontrar el indice en donde esta el usuario
-                    if(indiceUsuario != -1 && contrasenas.get(indiceUsuario).equals(contrasena)){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
+                    
+                    esUsuarioValido = esUsuarioValido(usuario, contrasena);
+                    
+                    if(esUsuarioValido){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido"); 
                         menuProfesores(escaner); // Menu profesores
@@ -81,7 +81,7 @@ public class Sigeas {
                 
                 case "b": {
                     System.out.print("Contrasena > ");
-                    contrasena = escaner.next();
+                    contrasena = escaner.nextLine();
                     if(contrasena.equals(CONTRASENA_ADMINISTRADOR)){
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido");
@@ -154,6 +154,7 @@ public class Sigeas {
             System.out.println("d) Eliminar alumno");
             System.out.println("e) Iniciar pase de asistencia");
             System.out.println("f) Volver al menu de inicio de sesion");
+            System.out.print("Elije una opcion > ");
             opcionMenuProfesores = escaner.nextLine().toLowerCase();
             
             switch(opcionMenuProfesores){
@@ -168,7 +169,6 @@ public class Sigeas {
                 }
                 case "b": {
                     menuCrearAlumno(escaner);
-                    escaner.nextLine();
                     break;
                 }
                 case "c": {
@@ -186,6 +186,7 @@ public class Sigeas {
             }
         }while(!opcionMenuProfesores.equals("f"));
     }
+    
     // MENU CREAR ALUMNOS
     static void menuCrearAlumno(Scanner escaner){
         int boletaAlumno;
@@ -206,12 +207,31 @@ public class Sigeas {
                 }
             }while(!esBoletaValida);
             
-            System.out.println("¿Cual es el nombre del alumno? (Primer nombre)");
-            nombreAlumno = escaner.nextLine();
-            System.out.println("¿Cual es el apellido paterno del alumno?");
-            apellidoPaternoAlumno = escaner.nextLine();
-            System.out.println("¿Cual es el apellido materno del alumno?");
-            apellidoMaternoAlumno = escaner.nextLine();
+            do{
+                System.out.println("¿Cual es el nombre del alumno? (Solo nombres)");
+                nombreAlumno = escaner.nextLine();
+                if(!esNombreValido(nombreAlumno)){
+                    System.out.println("ERROR: Nombre invalido");
+                }
+            }while(!esNombreValido(nombreAlumno));
+            
+            do{
+                System.out.println("¿Cual es el apellido paterno del alumno?");
+                apellidoPaternoAlumno = escaner.nextLine();
+                if(!esApellidoValido(apellidoPaternoAlumno)){
+                    System.out.println("ERROR: Apellido paterno invalido");
+                }
+            }while(!esApellidoValido(apellidoPaternoAlumno));
+            
+            
+            do{
+                System.out.println("¿Cual es el apellido materno del alumno?");
+               apellidoMaternoAlumno = escaner.nextLine();
+                if(!esApellidoValido(apellidoMaternoAlumno)){
+                    System.out.println("ERROR: Apellido materno invalido");
+                }
+            }while(!esApellidoValido(apellidoMaternoAlumno));
+            
             System.out.println("¿Cual es el grupo del alumno?");
             grupoAlumno = escaner.nextLine();
             
@@ -224,14 +244,17 @@ public class Sigeas {
             do{
                 System.out.print("Elija una accion: ");
                 opcionCrearAlumno = escaner.nextLine().toLowerCase();
+                if (!("a".equals(opcionCrearAlumno) || "b".equals(opcionCrearAlumno) || "c".equals(opcionCrearAlumno) || "d".equals(opcionCrearAlumno))) {
+                    System.out.println("Opcion invalida. Elige a, b, c o d.");
+                }
             }while(!("a".equals(opcionCrearAlumno) || "b".equals(opcionCrearAlumno) || "c".equals(opcionCrearAlumno) || "d".equals(opcionCrearAlumno)));
-               
             if(opcionCrearAlumno.equals("a") || opcionCrearAlumno.equals("b")){ // Si se desea guardar los datos
                 crearAlumno(boletaAlumno, nombreAlumno, apellidoPaternoAlumno, apellidoMaternoAlumno, grupoAlumno); 
             }
         
         }while(!(opcionCrearAlumno.equals("a") || opcionCrearAlumno.equals("c"))); // Si se desea salir
     }
+    
     // Valida si la boleta es valida, retorna un int de la boleta si es valida, y -1 si es invalida
     static int validarBoleta(String boleta){
         int boletaAlumno;
@@ -240,6 +263,25 @@ public class Sigeas {
         }catch(NumberFormatException e){
             return -1;
         }
+        
         return boletaAlumno;
+    }
+    
+    // Valida el inicio de sesion de un profesor
+    static boolean esUsuarioValido(String usuario, String contrasena){
+        int indiceUsuario = profesores.indexOf(usuario); // Encontrar el indice en donde esta el usuario
+        return (indiceUsuario != -1 && contrasenas.get(indiceUsuario).equals(contrasena)); // Si si existe el usuario y su contraseña coincide con la contraseña dada
+    }
+    
+    static boolean esNombreValido(String nombre){
+        String regexNombre = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,2}$";
+        
+        return nombre.matches(regexNombre);
+    }
+    
+    static boolean esApellidoValido(String apellido){
+        String regexApellido = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,2}$";
+        
+        return apellido.matches(regexApellido);
     }
 }
