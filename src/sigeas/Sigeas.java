@@ -55,7 +55,8 @@ public class Sigeas {
             System.out.println("Inicio de sesion");
             System.out.println("a) Iniciar sesion como profesor");
             System.out.println("b) Iniciar sesion como administrador");
-            System.out.println("c) Salir");       
+            System.out.println("c) Salir");
+            System.out.print("Elije una opcion > ");
             opcionMenuInicioDeSesion = escaner.nextLine().toLowerCase();
             
             switch(opcionMenuInicioDeSesion){
@@ -121,7 +122,7 @@ public class Sigeas {
                     break;
                 }
                 case "b":{
-                    //TODO: Agregar un profesor
+                    menuCrearProfesor(escaner);
                     break;
                 }
                 case "c":{
@@ -255,6 +256,49 @@ public class Sigeas {
         }while(!(opcionCrearAlumno.equals("a") || opcionCrearAlumno.equals("c"))); // Si se desea salir
     }
     
+    // MENU CREAR PROFESORES
+    static void menuCrearProfesor(Scanner escaner){
+        String profesor, contrasena, opcionCrearProfesor;
+        
+        System.out.println("CREAR PROFESORES");
+        do{
+        
+            do{
+                System.out.println("¿Cual es el usuario del profesor? (Minimo 5 caracteres)");
+                profesor = escaner.nextLine();
+                if(!esUsuarioValido(profesor)){
+                    System.out.println("ERROR: Usuario Invalido");
+                }else if(profesores.contains(profesor)){
+                    System.out.println("ERROR: Ese usuario ya existe");
+                }
+            }while(!esUsuarioValido(profesor) || profesores.contains(profesor));
+            do{
+                System.out.println("¿Cual es la contraseña del profesor? (Minimo 5 caracteres)");
+                contrasena = escaner.nextLine();
+                if(!esContrasenaValida(contrasena)){
+                    System.out.println("ERROR: Usuario Invalido");
+                }
+            }while(!esContrasenaValida(contrasena));
+
+            System.out.println("Datos capturados, elija una accion: ");
+                System.out.println("a) Guardar datos y salir");
+                System.out.println("b) Guardar datos y agregar un nuevo profesor");
+                System.out.println("c) Salir sin guardar datos");
+                System.out.println("d) Reingresar datos del profesor");
+
+                do{
+                    System.out.print("Elija una accion: ");
+                    opcionCrearProfesor = escaner.nextLine().toLowerCase();
+                    if (!("a".equals(opcionCrearProfesor) || "b".equals(opcionCrearProfesor) || "c".equals(opcionCrearProfesor) || "d".equals(opcionCrearProfesor))) {
+                        System.out.println("Opcion invalida. Elige a, b, c o d.");
+                    }
+                }while(!("a".equals(opcionCrearProfesor) || "b".equals(opcionCrearProfesor) || "c".equals(opcionCrearProfesor) || "d".equals(opcionCrearProfesor)));
+                if(opcionCrearProfesor.equals("a") || opcionCrearProfesor.equals("b")){ // Si se desea guardar los datos
+                    crearProfesor(profesor, contrasena);
+                }
+        }while(!(opcionCrearProfesor.equals("a") || opcionCrearProfesor.equals("c")));
+    }
+    
     // Valida si la boleta es valida, retorna un int de la boleta si es valida, y -1 si es invalida
     static int validarBoleta(String boleta){
         int boletaAlumno;
@@ -283,5 +327,15 @@ public class Sigeas {
         String regexApellido = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,2}$";
         
         return apellido.matches(regexApellido);
+    }
+    
+    static boolean esUsuarioValido(String usuario){
+        String regexUsuario= "^\\S{5,}$";
+        return usuario.matches(regexUsuario);
+    }
+    
+    static boolean esContrasenaValida(String contrasena){
+        String regexContrasena = "^\\S{5,}$";
+        return contrasena.matches(regexContrasena);
     }
 }
