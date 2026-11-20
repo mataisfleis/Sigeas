@@ -72,7 +72,7 @@ public class Sigeas {
                     if(indiceUsuario != -1 && contrasenas.get(indiceUsuario).equals(contrasena)){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido"); 
-                        menuProfesores(escaner); // Menu administrador
+                        menuProfesores(escaner); // Menu profesores
                     }else{
                         System.out.println("Usuario o contraseña no encontrados");
                     }
@@ -85,7 +85,7 @@ public class Sigeas {
                     if(contrasena.equals(CONTRASENA_ADMINISTRADOR)){
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido");
-                        menuAdministrador(escaner); // Menu profesores
+                        menuAdministrador(escaner); // Menu administrador
                     }else{
                         System.out.println("Acceso denegado");
                     }
@@ -168,6 +168,7 @@ public class Sigeas {
                 }
                 case "b": {
                     menuCrearAlumno(escaner);
+                    escaner.nextLine();
                     break;
                 }
                 case "c": {
@@ -190,13 +191,20 @@ public class Sigeas {
         int boletaAlumno;
         String nombreAlumno, apellidoPaternoAlumno, apellidoMaternoAlumno, grupoAlumno, opcionCrearAlumno;
         do{
+            boolean esBoletaValida;
             do { // Validamos que la boleta recibida sea un entero mayor a cero
+                esBoletaValida = true;
                 System.out.println("¿Cual es la boleta del alumno?");
                 boletaAlumno = validarBoleta(escaner.nextLine()); // Llamamos a la funcion para validar boleta
                 if(boletaAlumno < 1){ // Si la boleta es invalida, lo notificamos
                     System.out.println("ERROR: Boleta invalida");
+                    esBoletaValida = false;
                 }
-            }while(boletaAlumno < 1);
+                if(boletas.contains(boletaAlumno)){
+                    System.out.println("ERROR: Esa boleta ya esta registrada");
+                    esBoletaValida = false;
+                }
+            }while(!esBoletaValida);
             
             System.out.println("¿Cual es el nombre del alumno? (Primer nombre)");
             nombreAlumno = escaner.nextLine();
