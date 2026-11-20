@@ -52,7 +52,6 @@ public class Sigeas {
         do{
             
             System.out.println("INICIO DE SESION");
-            System.out.println("Inicio de sesion");
             System.out.println("a) Iniciar sesion como profesor");
             System.out.println("b) Iniciar sesion como administrador");
             System.out.println("c) Salir");
@@ -61,16 +60,16 @@ public class Sigeas {
             
             switch(opcionMenuInicioDeSesion){
                 case "a": {
-                    boolean esUsuarioValido;
+                    boolean esFormatoUsuarioValido;
                     
                     System.out.print("Usuario > ");
                     usuario = escaner.nextLine();
                     System.out.print("Contraseña > ");
                     contrasena = escaner.nextLine();
                     
-                    esUsuarioValido = esUsuarioValido(usuario, contrasena);
+                    esFormatoUsuarioValido = esUsuarioValido(usuario, contrasena);
                     
-                    if(esUsuarioValido){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
+                    if(esFormatoUsuarioValido){ // Si si existe el usuario y su contraseña coincide con la contraseña dada
                         System.out.print("\033[H\033[2J");  // Limpiar consola
                         System.out.println("Acceso permitido"); 
                         menuProfesores(escaner); // Menu profesores
@@ -133,11 +132,7 @@ public class Sigeas {
                     // TODO: Eliminar profesor
                     break;
                 }
-                case "e": {
-                    // TODO: Iniciar pase de asistencia
-                    break;
-                }
-                case "f": break;
+                case "e": break; // Salir
                 default: {
                     System.out.println("Opcion desconocida");
                 }
@@ -180,7 +175,11 @@ public class Sigeas {
                     //TODO: Eliminar alumno
                     break;
                 }
-                case "e": break;
+                case "e": {
+                    //TODO: Pase de asistencia
+                    break;
+                }
+                case "f": break; // Salida
                 default: {
                     System.out.println("Opcion desconocida");
                 }
@@ -210,7 +209,7 @@ public class Sigeas {
             
             do{
                 System.out.println("¿Cual es el nombre del alumno? (Solo nombres)");
-                nombreAlumno = escaner.nextLine();
+                nombreAlumno = escaner.nextLine().trim();
                 if(!esNombreValido(nombreAlumno)){
                     System.out.println("ERROR: Nombre invalido");
                 }
@@ -218,7 +217,7 @@ public class Sigeas {
             
             do{
                 System.out.println("¿Cual es el apellido paterno del alumno?");
-                apellidoPaternoAlumno = escaner.nextLine();
+                apellidoPaternoAlumno = escaner.nextLine().trim();
                 if(!esApellidoValido(apellidoPaternoAlumno)){
                     System.out.println("ERROR: Apellido paterno invalido");
                 }
@@ -227,7 +226,7 @@ public class Sigeas {
             
             do{
                 System.out.println("¿Cual es el apellido materno del alumno?");
-               apellidoMaternoAlumno = escaner.nextLine();
+                apellidoMaternoAlumno = escaner.nextLine().trim();
                 if(!esApellidoValido(apellidoMaternoAlumno)){
                     System.out.println("ERROR: Apellido materno invalido");
                 }
@@ -262,12 +261,11 @@ public class Sigeas {
         
         System.out.println("CREAR PROFESORES");
         do{
-        
             do{
                 System.out.println("¿Cual es el usuario del profesor? (Minimo 5 caracteres)");
                 profesor = escaner.nextLine();
                 if(!esUsuarioValido(profesor)){
-                    System.out.println("ERROR: Usuario Invalido");
+                    System.out.println("ERROR: Usuario invalido");
                 }else if(profesores.contains(profesor)){
                     System.out.println("ERROR: Ese usuario ya existe");
                 }
@@ -276,26 +274,26 @@ public class Sigeas {
                 System.out.println("¿Cual es la contraseña del profesor? (Minimo 5 caracteres)");
                 contrasena = escaner.nextLine();
                 if(!esContrasenaValida(contrasena)){
-                    System.out.println("ERROR: Usuario Invalido");
+                    System.out.println("ERROR: Contraseña invalida");
                 }
             }while(!esContrasenaValida(contrasena));
 
             System.out.println("Datos capturados, elija una accion: ");
-                System.out.println("a) Guardar datos y salir");
-                System.out.println("b) Guardar datos y agregar un nuevo profesor");
-                System.out.println("c) Salir sin guardar datos");
-                System.out.println("d) Reingresar datos del profesor");
+            System.out.println("a) Guardar datos y salir");
+            System.out.println("b) Guardar datos y agregar un nuevo profesor");
+            System.out.println("c) Salir sin guardar datos");
+            System.out.println("d) Reingresar datos del profesor");
 
-                do{
-                    System.out.print("Elija una accion: ");
-                    opcionCrearProfesor = escaner.nextLine().toLowerCase();
-                    if (!("a".equals(opcionCrearProfesor) || "b".equals(opcionCrearProfesor) || "c".equals(opcionCrearProfesor) || "d".equals(opcionCrearProfesor))) {
-                        System.out.println("Opcion invalida. Elige a, b, c o d.");
-                    }
-                }while(!("a".equals(opcionCrearProfesor) || "b".equals(opcionCrearProfesor) || "c".equals(opcionCrearProfesor) || "d".equals(opcionCrearProfesor)));
-                if(opcionCrearProfesor.equals("a") || opcionCrearProfesor.equals("b")){ // Si se desea guardar los datos
-                    crearProfesor(profesor, contrasena);
+            do{
+                System.out.print("Elija una accion: ");
+                opcionCrearProfesor = escaner.nextLine().toLowerCase();
+                if (!("a".equals(opcionCrearProfesor) || "b".equals(opcionCrearProfesor) || "c".equals(opcionCrearProfesor) || "d".equals(opcionCrearProfesor))) {
+                    System.out.println("Opcion invalida. Elige a, b, c o d.");
                 }
+            }while(!("a".equals(opcionCrearProfesor) || "b".equals(opcionCrearProfesor) || "c".equals(opcionCrearProfesor) || "d".equals(opcionCrearProfesor)));
+            if(opcionCrearProfesor.equals("a") || opcionCrearProfesor.equals("b")){ // Si se desea guardar los datos
+                crearProfesor(profesor, contrasena);
+            }
         }while(!(opcionCrearProfesor.equals("a") || opcionCrearProfesor.equals("c")));
     }
     
