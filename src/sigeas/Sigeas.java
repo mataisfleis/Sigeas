@@ -74,7 +74,7 @@ public class Sigeas {
                         System.out.println("Acceso permitido"); 
                         menuProfesores(escaner); // Menu profesores
                     }else{
-                        System.out.println("Usuario o contraseña no encontrados");
+                        System.out.println("Usuario y/o contraseña incorrectos");
                     }
                     break;
                 }
@@ -231,9 +231,13 @@ public class Sigeas {
                     System.out.println("ERROR: Apellido materno invalido");
                 }
             }while(!esApellidoValido(apellidoMaternoAlumno));
-            
-            System.out.println("¿Cual es el grupo del alumno?");
-            grupoAlumno = escaner.nextLine();
+            do{
+                System.out.println("¿Cual es el grupo del alumno?");
+                grupoAlumno = escaner.nextLine();
+                if(!esGrupoValido(grupoAlumno)){
+                    System.out.println("ERROR: Grupo invalido");
+                }
+            }while(!esGrupoValido(grupoAlumno));
             
             System.out.println("Datos capturados, elija una accion: ");
             System.out.println("a) Guardar datos y salir");
@@ -325,6 +329,11 @@ public class Sigeas {
         String regexApellido = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,2}$";
         
         return apellido.matches(regexApellido);
+    }
+    
+    static boolean esGrupoValido(String grupo){
+        String regexGrupo = "^[1-6]I[MV](?:[1-9]|1[0-9]|20)$";
+        return grupo.matches(regexGrupo);
     }
     
     static boolean esUsuarioValido(String usuario){
