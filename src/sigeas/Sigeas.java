@@ -55,7 +55,7 @@ public class Sigeas {
             System.out.println("a) Iniciar sesion como profesor");
             System.out.println("b) Iniciar sesion como administrador");
             System.out.println("c) Salir");
-            System.out.print("Elije una opcion > ");
+            System.out.print("Elige una opcion > ");
             opcionMenuInicioDeSesion = escaner.nextLine().toLowerCase();
             
             switch(opcionMenuInicioDeSesion){
@@ -80,7 +80,7 @@ public class Sigeas {
                 }
                 
                 case "b": {
-                    System.out.print("Contrasena > ");
+                    System.out.print("Contraseña > ");
                     contrasena = escaner.nextLine();
                     if(contrasena.equals(CONTRASENA_ADMINISTRADOR)){
                         System.out.print("\033[H\033[2J");  // Limpiar consola
@@ -111,7 +111,7 @@ public class Sigeas {
             System.out.println("c) Modificar datos de un profesor");
             System.out.println("d) Eliminar un profesor");
             System.out.println("e) Salir al menu de inicio de sesion");
-            System.out.print("Elije una opcion > ");
+            System.out.print("Elige una opcion > ");
             
             opcionMenuAdministrador = escaner.nextLine().toLowerCase();
             
@@ -150,7 +150,7 @@ public class Sigeas {
             System.out.println("d) Eliminar alumno");
             System.out.println("e) Iniciar pase de asistencia");
             System.out.println("f) Volver al menu de inicio de sesion");
-            System.out.print("Elije una opcion > ");
+            System.out.print("Elige una opcion > ");
             opcionMenuProfesores = escaner.nextLine().toLowerCase();
             
             switch(opcionMenuProfesores){
