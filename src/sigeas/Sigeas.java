@@ -303,7 +303,9 @@ public class Sigeas {
     
     // Valida si la boleta es valida, retorna un int de la boleta si es valida, y -1 si es invalida
     static int validarBoleta(String boleta){
+        String regexBoleta = "[0-9]{10}";
         int boletaAlumno;
+        if(!boleta.matches(regexBoleta)) return -1;
         try {
            boletaAlumno = Integer.parseInt(boleta);
         }catch(NumberFormatException e){
