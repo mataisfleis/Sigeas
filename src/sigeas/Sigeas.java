@@ -152,7 +152,7 @@ public class Sigeas {
                 }
                 case "e": break; // Salir
                 default: {
-                    System.out.println("Opcion desconocida");
+                    System.out.println("Opcion incorrecta, intente nuevamente");
                 }
             }
         }while(!opcionMenuAdministrador.equals("e"));
@@ -214,7 +214,7 @@ public class Sigeas {
             do { // Validamos que la boleta recibida sea un entero mayor a cero
                 esBoletaValida = true;
                 System.out.println("¿Cual es la boleta del alumno?");
-                boletaAlumno = validarBoleta(escaner.nextLine()); // Llamamos a la funcion para validar boleta
+                boletaAlumno = validarBoleta(escaner.nextLine().trim()); // Llamamos a la funcion para validar boleta
                 if(boletaAlumno < 1){ // Si la boleta es invalida, lo notificamos
                     System.out.println("ERROR: Boleta invalida");
                     esBoletaValida = false;
@@ -226,16 +226,22 @@ public class Sigeas {
             }while(!esBoletaValida);
             
             do{
-                System.out.println("¿Cual es el nombre del alumno? (Solo nombres)");
+                System.out.println("¿Cual es el nombre del alumno? (Solo nombres, maximo 3 nombres)");
                 nombreAlumno = escaner.nextLine().trim();
+                // No es valido cuando:
+                // Son mas de tres nombres
+                // Contienen numeros
                 if(!esNombreValido(nombreAlumno)){
-                    System.out.println("ERROR: Nombre invalido");
+                    System.out.println("ERROR: Los nombres no deben contener numeros y deben ser maximo 3 nombres");
                 }
             }while(!esNombreValido(nombreAlumno));
             
             do{
                 System.out.println("¿Cual es el apellido paterno del alumno?");
                 apellidoPaternoAlumno = escaner.nextLine().trim();
+                // No es valido cuando:
+                // Es mas de un apellido
+                // Contiene numeros
                 if(!esApellidoValido(apellidoPaternoAlumno)){
                     System.out.println("ERROR: Apellido paterno invalido");
                 }
@@ -245,13 +251,16 @@ public class Sigeas {
             do{
                 System.out.println("¿Cual es el apellido materno del alumno?");
                 apellidoMaternoAlumno = escaner.nextLine().trim();
+                // No es valido cuando:
+                // Es mas de un apellido
+                // Contiene numeros
                 if(!esApellidoValido(apellidoMaternoAlumno)){
                     System.out.println("ERROR: Apellido materno invalido");
                 }
             }while(!esApellidoValido(apellidoMaternoAlumno));
             do{
                 System.out.println("¿Cual es el grupo del alumno?");
-                grupoAlumno = escaner.nextLine();
+                grupoAlumno = escaner.nextLine().trim().toUpperCase();
                 if(!esGrupoValido(grupoAlumno)){
                     System.out.println("ERROR: Grupo invalido");
                 }
@@ -265,7 +274,7 @@ public class Sigeas {
             
             do{
                 System.out.print("Elija una accion: ");
-                opcionCrearAlumno = escaner.nextLine().toLowerCase();
+                opcionCrearAlumno = escaner.nextLine().trim().toLowerCase();
                 if (!("a".equals(opcionCrearAlumno) || "b".equals(opcionCrearAlumno) || "c".equals(opcionCrearAlumno) || "d".equals(opcionCrearAlumno))) {
                     System.out.println("Opcion invalida. Elige a, b, c o d.");
                 }
@@ -285,9 +294,9 @@ public class Sigeas {
         do{
             do{
                 System.out.println("¿Cual es el usuario del profesor? (Minimo 5 caracteres)");
-                profesor = escaner.nextLine();
+                profesor = escaner.nextLine().trim();
                 if(!esUsuarioValido(profesor)){
-                    System.out.println("ERROR: Usuario invalido");
+                    System.out.println("ERROR: El usuario debe contener minimo 5 caracteres");
                 }else if(profesores.contains(profesor)){
                     System.out.println("ERROR: Ese usuario ya existe");
                 }
@@ -296,7 +305,7 @@ public class Sigeas {
                 System.out.println("¿Cual es la contraseña del profesor? (Minimo 5 caracteres)");
                 contrasena = escaner.nextLine();
                 if(!esContrasenaValida(contrasena)){
-                    System.out.println("ERROR: Contraseña invalida");
+                    System.out.println("ERROR: La contraseña debe contener minimo 5 caracteres");
                 }
             }while(!esContrasenaValida(contrasena));
 
